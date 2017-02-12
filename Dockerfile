@@ -10,7 +10,7 @@ RUN yum install -y git php-cli php-xml php-pdo which xdg-utils; \
     bash install-sh; \
     cd .. ; \
     rm -rf phoronix-test-suite; \
-    phoronix-test-suite batch-install pts/workstation; \
+    printf "2\n" | phoronix-test-suite install pts/workstation; \
     yum autoremove -y git; \
     yum clean all
-ENTRYPOINT ["phoronix-test-suite", "default-run", "pts/workstation"]
+CMD ["phoronix-test-suite", "default-run", "pts/workstation"]
