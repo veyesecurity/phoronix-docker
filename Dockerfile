@@ -11,6 +11,5 @@ RUN yum install -y git php-cli php-xml php-pdo which xdg-utils bzip2 unzip; \
     cd .. ; \
     rm -rf phoronix-test-suite; \
     printf "2\n" | phoronix-test-suite install pts/workstation; \
-    yum autoremove -y git; \
     yum clean all
-CMD ["phoronix-test-suite", "default-run", "pts/workstation"]
+ENTRYPOINT ["phoronix-test-suite"]
