@@ -12,4 +12,4 @@ RUN yum install -y git php-cli php-xml php-pdo which xdg-utils bzip2 unzip; \
     rm -rf phoronix-test-suite; \
     printf "2\n" | phoronix-test-suite install pts/all; \
     yum clean all
-ENTRYPOINT ["phoronix-test-suite", "default-run", "pts/all"]
+CMD ["phoronix-test-suite", "default-run", "pts/all"]
