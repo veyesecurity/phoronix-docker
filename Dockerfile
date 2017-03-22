@@ -1,15 +1,15 @@
-FROM centos:latest
-MAINTAINER Yuri Shapira <yuri@veye-security.com>
-ADD https://api.github.com/repos/phoronix-test-suite/phoronix-test-suite/git/refs/tags tags.json
-RUN yum install -y git php-cli php-xml php-pdo which xdg-utils bzip2 unzip; \
-    git clone https://github.com/phoronix-test-suite/phoronix-test-suite.git; \
-    cd phoronix-test-suite/; \
-    latesttag=$(git tag|sed '$!d'); \
-    echo checking out ${latesttag}; \
-    git checkout ${latesttag}; \
-    bash install-sh; \
-    cd .. ; \
-    rm -rf phoronix-test-suite; \
-    printf "2\n" | phoronix-test-suite install pts/all; \
+
+FROM centos:7
+MAINTAINER vEyE Security <info@veye-security.com>
+
+ADD suite-definition.xml /var/lib/phoronix-test-suite/test-suites/local/container/suite-definition.xml
+RUN yum install -y epel-release && \
+    yum install -y phoronix-test-suite bzip2 unzip bc && \
+    phoronix-test-suite batch-install local/container && \
     yum clean all
-CMD ["phoronix-test-suite", "default-run", "pts/all"]
+
+RUN printf "n\nn\n" | phoronix-test-suite batch-setup
+
+RUN phoronix-test-suite user-config-set StandardDeviationThreshold=0.10
+
+CMD phoronix-test-suite batch-run local/container

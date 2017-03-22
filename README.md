@@ -1,1 +1,1 @@
-docker run -it veyesecurity/phoronix
+docker run veyesecurity/phoronix
